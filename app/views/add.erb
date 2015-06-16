@@ -1,0 +1,27 @@
+<form action="index/add">
+name of the group:<br>
+<input type="text" name="name" required>
+<br>
+Location of the Meetup:<br>
+<input type="text" name="location" required>
+Description of the Meetup:<br>
+<input type="text" name="description" required>
+Categories of the Meetup:<br>
+
+<!-- MAKE THIS GO -->
+<% categories.each do |category| %>
+  
+  <input type="checkbox" name="<%= category %>" value="<%= category %>" required>
+
+<% end %>
+  <!-- YAY! -->
+
+Description of the Meetup:<br>
+<input type="datetime" name="location" required>
+</form>
+
+name
+location
+description
+category
+date
