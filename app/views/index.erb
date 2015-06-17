@@ -1,1 +1,10 @@
-<h1><%= @title %></h1>
+<h1>Meet ups in Space</h1>
+<a href 'index/profile'>See your groups</a>
+
+<!-- MAKE THIS A THING -->
+<% meetups.each do |meetup| %>
+<a href='index/details'><%= meetup %></a>
+<% end %>
+<!-- :) -->
+
+<a href='index/add'>Create a new group</a>>
