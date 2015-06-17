@@ -11,30 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617170819) do
+ActiveRecord::Schema.define(version: 20150617204527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",      null: false
+    t.integer "meetup_id"
   end
 
-  create_table "categories_meetups", id: false, force: true do |t|
+  create_table "categorizations", id: false, force: true do |t|
     t.integer "category_id"
     t.integer "meetup_id"
   end
 
   create_table "locations", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",      null: false
+    t.integer "meetup_id"
   end
 
   create_table "meetups", force: true do |t|
-    t.string "name",        null: false
-    t.string "location",    null: false
-    t.string "description", null: false
-    t.string "category",    null: false
-    t.date   "date",        null: false
+    t.string  "name",        null: false
+    t.string  "description", null: false
+    t.date    "date",        null: false
+    t.integer "user_id"
+    t.integer "location_id"
+    t.integer "category_id"
   end
 
   create_table "users", force: true do |t|
@@ -45,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150617170819) do
     t.string   "avatar_url", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "meetup_id"
   end
 
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree

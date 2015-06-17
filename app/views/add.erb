@@ -1,27 +1,20 @@
-<form action="index/add">
-name of the group:<br>
-<input type="text" name="name" required>
+<form action="/index/add" method="post"><br>
+<label for='name_of_the_group'>Name of the Group:</label><br>
+<input type="text" name="name_of_the_group" id="name_of_the_group" required>
 <br>
 Location of the Meetup:<br>
-<input type="text" name="location" required>
+<select name="location">
+<% locations.each do |location| %>
+    <option value="<%= location.name %>"><%= location.name %></option>
+<% end %></select><br>
 Description of the Meetup:<br>
-<input type="text" name="description" required>
+<input type="text" name="description" required><br>
 Categories of the Meetup:<br>
-
-<!-- MAKE THIS GO -->
 <% categories.each do |category| %>
-  
-  <input type="checkbox" name="<%= category %>" value="<%= category %>" required>
-
+  <label><%= category.name %></label>
+  <input type="checkbox" name="<%= category.name %>" value="<%= category.name %>" >
 <% end %>
-  <!-- YAY! -->
-
-Description of the Meetup:<br>
-<input type="datetime" name="location" required>
+<br><br>
+<input type="submit" value="Submit">
 </form>
 
-name
-location
-description
-category
-date

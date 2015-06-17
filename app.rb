@@ -25,7 +25,7 @@ end
 def authenticate!
   unless signed_in?
     flash[:notice] = 'You need to sign in if you want to do that!'
-    redirect '/'
+    redirect '/index'
   end
 end
 
@@ -37,14 +37,14 @@ get '/auth/github/callback' do
   set_current_user(user)
   flash[:notice] = "You're now signed in as #{user.username}!"
 
-  redirect '/'
+  redirect '/index'
 end
 
 get '/sign_out' do
   session[:user_id] = nil
   flash[:notice] = "You have been signed out."
 
-  redirect '/'
+  redirect '/index'
 end
 
 get '/example_protected_page' do
@@ -56,27 +56,39 @@ get '/' do
 end
 
 get '/index' do
-  erb :index
+  meetups = Meetup.all
+  erb :index, locals: {meetups: meetups}
 end
 
-get '/index/details' do
-  erb :details 
+get '/index/details/:id' do
+  authenticate!
+  meetups = Meetup.find(params[:id])
+  binding.pry
+  erb :details, locals: {meetups: meetups }
 end
 
 post '/index/details' do
 end
 
 get '/index/add' do
-  erb :add
+  authenticate!
+  categories = Category.all
+  locations = Location.all
+  erb :add, locals: {categories: categories, locations: locations}
 end
 
 post '/index/add' do 
-end
+  binding.pry
+  Meetup.create(
+  name: "#{params['name_of_the_group']}",
+  location: "#{Location.find_by name: params['location']}",
+  description: "#{params['descripton']}",
+  )
 
-get '/index/sign_in' do
-  erb :sign_in
+  redirect '/index/details/#{Meetup.last}'
 end
 
 get '/index/profile' do 
+  authenticate!
   erb :profile
 end

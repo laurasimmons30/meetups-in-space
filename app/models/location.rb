@@ -1,4 +1,4 @@
 class Location < ActiveRecord::Base
-  validates :location, presence: true 
+  validates :name, presence: true 
   has_many :meetups
 end
