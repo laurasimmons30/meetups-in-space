@@ -1,4 +1,22 @@
-<!-- Pull details from meetup table -->
+<h1>Deeeeets for your Meeeeeet</h1>
 
+<p>Name:<br><%= meetups.name %></p>
 
-<!-- button to be added to the meetup -->
+<p>Location:<br><%= meetups.location.name %></p>
+
+<p>Description:<br><%= meetups.description %></p>
+
+<h3>Memebers in this group</h3>
+
+<% meetups.users.each do |user| %>
+  <%= user.username %>
+  <img src="<%= user.avatar_url %>"/>
+<% end %>
+
+<form action= '/index/details/add/<%= params[:id] %>' method='post'>
+<input type="submit" name="Join" value="Join" />
+</form>
+
+<form action= '/index/details/remove/<%= params[:id] %>' method='post'>
+<input type="submit" name="Leave" value="Leave" />
+</form>

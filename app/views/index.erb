@@ -1,8 +1,10 @@
 <h1>Meet ups in Space</h1>
 <a href 'index/profile'>See your groups</a>
 <ul>
+
 <% meetups.each do |meetup| %>
-<li><a href='index/details'><%= meetup.name %></a></li>
+
+<li><a href='index/details/<%= meetup.id %>'><%= meetup.name %></a></li>
 <% end %>
 </ul>
 

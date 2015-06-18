@@ -7,15 +7,15 @@ feature "User fills out form to add a new meetup group" do
 # So that I can gather a group of people to discuss a given topic
 
   scenario 'I have to fill in all details on form to add meetup' do
-    visit 'index/add'
-    fill_in'name_of_the_group', with: ''
+    visit '/index/add'
+    fill_in 'Name', with: ''
 
     expect(page).to raise_error
 
-    visit 'index/add'
-    fill_in('name of the group', with: 'Goth Picnics Star Chapter')
+    visit '/index/add'
+    fill_in('Name', with: 'Goth Picnics Star Chapter')
     fill_in('Location of the Meetup:', with: 'Venus')
-    fill_in('Description of the Meetup:', with: 'Come hang with your dark homies and eat sandwiches')
+    fill_in('Description of the Meetup:', with: 'Come hang with your dark homies and eat sammies')
     check('Fitness')
     click_button('Submit')
 

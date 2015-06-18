@@ -56,18 +56,27 @@ get '/' do
 end
 
 get '/index' do
-  meetups = Meetup.all
+  meetups = Meetup.order(:name)
   erb :index, locals: {meetups: meetups}
 end
 
 get '/index/details/:id' do
   authenticate!
   meetups = Meetup.find(params[:id])
-  binding.pry
   erb :details, locals: {meetups: meetups }
 end
 
-post '/index/details' do
+post '/index/details/add/:id' do
+  Usermeetup.create(user_id: current_user.id, meetup_id: Meetup.find(params[:id]).id)
+    flash[:notice] = "You've joined this group!"
+  redirect "/index/details/#{params[:id]}"
+end
+
+post '/index/details/remove/:id' do
+  binding.pry
+  Usermeetup.find_by(user_id: current_user.id,meetup_id: Meetup.find(params[:id]).id).destroy_all
+  flash[:notice] = "You have left this group"
+  redirect "/index/details/#{params[:id]}"
 end
 
 get '/index/add' do
@@ -78,14 +87,14 @@ get '/index/add' do
 end
 
 post '/index/add' do 
-  binding.pry
   Meetup.create(
-  name: "#{params['name_of_the_group']}",
-  location: "#{Location.find_by name: params['location']}",
-  description: "#{params['descripton']}",
+  name: "#{params['name']}",
+  location: Location.find_by(name: params['location']),
+  description: "#{params['description']}"
   )
+  flash[:notice] = "Your group has been added!"
 
-  redirect '/index/details/#{Meetup.last}'
+  redirect '/index'
 end
 
 get '/index/profile' do 
